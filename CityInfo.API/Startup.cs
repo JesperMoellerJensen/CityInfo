@@ -34,7 +34,7 @@ namespace CityInfo.API
             services.AddMvc().AddMvcOptions(o => o.OutputFormatters.Add(
                 new XmlDataContractSerializerOutputFormatter()));
 
-            var connectionString = @"Server=(localdb)/mssqllocaldb;Database=CityInfoDB;Trusted_Connection=True;";
+            var connectionString = Startup.Configuration["connectionStrings:cityInfoDBConnectionString"];
             services.AddDbContext<CityInfoContex>(o => o.UseSqlServer(connectionString));
 
             //    .AddJsonOptions(o => {
@@ -55,7 +55,8 @@ namespace CityInfo.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,
+            CityInfoContex cityInfoContex)
         {
 
             loggerFactory.AddNLog();
@@ -68,6 +69,8 @@ namespace CityInfo.API
             {
                 app.UseExceptionHandler();
             }
+
+            cityInfoContex.EnsureSeedDataForContext();
 
             app.UseStatusCodePages();
 

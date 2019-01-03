@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CityInfo.API.Controllers
 {
+    [Route("api/Dummy")]
     public class DummyController : Controller
     {
         private CityInfoContex _ctx;
@@ -14,6 +15,12 @@ namespace CityInfo.API.Controllers
         public DummyController(CityInfoContex ctx)
         {
             _ctx = ctx;
+        }
+
+        [HttpGet]
+        public IActionResult Test()
+        {
+            return NoContent();
         }
 
 

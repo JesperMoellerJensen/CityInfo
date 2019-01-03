@@ -13,7 +13,7 @@ namespace CityInfo.API.Entities
 
         public CityInfoContex(DbContextOptions<CityInfoContex> options) : base(options)
         {
-            Database.EnsureCreated();
+            Database.Migrate();
         }
     }
 }
